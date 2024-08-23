@@ -36,28 +36,28 @@ def initialize_data():
     db = connect_to_mongoDB()
 
     weapons_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/weapons.csv")
-    insert_data_into_mongoDB(weapons_data, "weapons" , db)
+    insert_data_into_mongoDB(weapons_data, "Weapons" , db)
 
     armors_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/armors.csv")
-    insert_data_into_mongoDB(armors_data, "armors", db)
+    insert_data_into_mongoDB(armors_data, "Armors", db)
 
     bosses_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/validatedbosses.csv")
-    insert_data_into_mongoDB(bosses_data, "bosses", db)
+    insert_data_into_mongoDB(bosses_data, "Bosses", db)
 
     great_runes_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/greatRunes.csv")
-    insert_data_into_mongoDB(great_runes_data, "great_runes", db)
+    insert_data_into_mongoDB(great_runes_data, "Great Runes", db)
 
     npcs_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/npcs.csv")
-    insert_data_into_mongoDB(npcs_data, "npcs", db)
+    insert_data_into_mongoDB(npcs_data, "NPCs", db)
 
     remembrances_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/remembrances.csv")
-    insert_data_into_mongoDB(remembrances_data, "remembrances", db)
+    insert_data_into_mongoDB(remembrances_data, "Remembrances", db)
 
     shields_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/shields.csv")
-    insert_data_into_mongoDB(shields_data, "shields", db)
+    insert_data_into_mongoDB(shields_data, "Shields", db)
 
     talismans_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/talismans.csv")
-    insert_data_into_mongoDB(talismans_data, "talismans", db)
+    insert_data_into_mongoDB(talismans_data, "Talismans", db)
 
 if __name__ == "__main__":
     initialize_data()

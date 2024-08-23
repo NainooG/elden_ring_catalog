@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const categories = [
-  'armors',
-  'remembrances',
-  'weapons',
-  'shields',
-  'talismans',
-  'npcs',
-  'bosses',
-  'great_runes'
+  'Armors',
+  'Remembrances',
+  'Weapons',
+  'Shields',
+  'Talismans',
+  'NPCs',
+  'Bosses',
+  'Great Runes'
 ];
 
 function ItemExplorer() {
@@ -33,7 +33,7 @@ function ItemExplorer() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Elden Ring Item Explorer</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Elden Ring Item Explorer</h1>
 
       {/* Category Tabs */}
       <div className="flex justify-center mb-4 border-b">
@@ -43,7 +43,7 @@ function ItemExplorer() {
             className={`mr-4 p-2 ${selectedCategory === category ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
             onClick={() => setSelectedCategory(category)}
           >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
+            {category}
           </button>
         ))}
       </div>
@@ -51,7 +51,7 @@ function ItemExplorer() {
       {/* Items Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {items.map(item => (
-          <div key={item._id} className="border p-4 rounded shadow">
+          <div key={item._id} className="border p-4 rounded shadow overflow-x-scroll text-nowrap">
             <h3 className="text-center font-semibold">{item.name}</h3>
             {/* Add more item details here if needed */}
           </div>

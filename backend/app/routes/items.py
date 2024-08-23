@@ -41,7 +41,7 @@ def get_items_by_type(item_type: str, db: Collection = Depends(get_database)):
     # print(items.name)
     # print(type(items))
     
-    print(db[item_type].find())
+    # print(list(db[item_type].find())) # prints a list of JSON objects
     
     items = list(db[item_type].find()) 
     items = convert_objectid(items)  # Convert ObjectId to string

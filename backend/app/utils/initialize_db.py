@@ -15,13 +15,21 @@ def connect_to_mongoDB():
     client = MongoClient(CONNECTION_STRING)
     return client["elden_ring"]
 
-def parse_csv(file_path):
+def parse_csv(file_path, fill_value=None):
     df = pd.read_csv(file_path)
+    
+    if fill_value is not None:
+        df.fillna(fill_value, inplace=True)
+        
     return df.to_dict(orient="records")
 
 def insert_data_into_mongoDB(data, collection_name, db):
     collection = db[collection_name]
-    collection.insert_many(data)
+    
+    collection.drop()
+    
+    if data:
+        collection.insert_many(data)
 
 # 1
 def initialize_data():
@@ -33,7 +41,7 @@ def initialize_data():
     armors_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/armors.csv")
     insert_data_into_mongoDB(armors_data, "armors", db)
 
-    bosses_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/bosses.csv")
+    bosses_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/validatedbosses.csv")
     insert_data_into_mongoDB(bosses_data, "bosses", db)
 
     great_runes_data = parse_csv("/Users/khushnaingobindpuri/Desktop/projects/elden_ring_catalog/backend/csv_files/greatRunes.csv")

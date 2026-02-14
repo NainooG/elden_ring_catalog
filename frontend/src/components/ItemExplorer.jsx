@@ -51,7 +51,7 @@ function ItemExplorer() {
       {/* Items Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {items.map(item => (
-          <div key={item._id} className="border p-4 rounded shadow overflow-x-scroll text-nowrap">
+          <div key={item._id} className="border p-4 rounded shadow overflow-x-auto text-nowrap">
             <h3 className="text-center font-semibold">{item.name}</h3>
             {/* Add more item details here if needed */}
           </div>

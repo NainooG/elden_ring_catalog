@@ -175,13 +175,13 @@ function ItemExplorer() {
 
           {isModalOpen && selectedItem && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={handleClose}>
-              <div className="bg-slate-900/90 rounded-2xl p-8 max-w-2xl mx-4" onClick={(e) => e.stopPropagation()}>
-                <button type="button" className="text-white text-2xl leading-none float-right" onClick={handleClose} aria-label="Close">&times;</button>
-                <div className="flex flex-col items-center">
-                  <h2 className="font-bold text-2xl mb-4">{selectedItem.name}</h2>
-                  {selectedItem.image && <img src={selectedItem.image} alt={selectedItem.name} className="rounded-lg mb-4" />}
-                  <p className="text-sm text-gray-300">{selectedItem.description}</p>
+              <div className="bg-slate-900/90 rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto mx-4" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-start justify-between mb-4">
+                  <h2 className="font-bold text-2xl">{selectedItem.name}</h2>
+                  <button type="button" className="text-white text-2xl leading-none ml-4" onClick={handleClose} aria-label="Close">&times;</button>
                 </div>
+                {selectedItem.image && <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-48 object-cover rounded-lg mb-4" />}
+                <p className="text-sm text-gray-300 whitespace-pre-wrap">{selectedItem.description}</p>
               </div>
             </div>
           )}

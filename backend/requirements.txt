@@ -1,5 +1,4 @@
 fastapi
 uvicorn
 pymongo
-redis
-modal
+dnspython

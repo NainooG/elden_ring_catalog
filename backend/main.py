@@ -6,7 +6,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or ["*"] to allow all origins during development
+    allow_origins=["*", 
+                   "https://elden-ring-catalog-8gcm.vercel.app"],  # Or ["*"] to allow all origins during development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

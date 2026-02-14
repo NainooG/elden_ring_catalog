@@ -23,7 +23,7 @@ function ItemExplorer() {
     const fetchItems = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8000/items/${selectedCategory}/`);
+        const response = await axios.get(`https://elden-ring-catalog-8gcm.vercel.app/items/${selectedCategory}/`);
         setItems(response.data);
       } catch (error) {
         console.error(`Error fetching items for category ${selectedCategory}:`, error.response ? error.response.data : error.message);

@@ -17,6 +17,26 @@ function ItemExplorer() {
   const [selectedCategory, setSelectedCategory] = useState('Bosses'); // Default to Bosses
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleOpen = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  }
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  }
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') handleClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // Fetch items whenever the selected category changes
   useEffect(() => {
@@ -124,43 +144,45 @@ function ItemExplorer() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
               {items.map((item, index) => (
-                <div
-                  key={item._id || index}
-                  className="group relative bg-slate-900/70 backdrop-blur-md rounded-3xl p-8 border border-gold/20 hover:border-gold/60 transition-all duration-500 transform hover:scale-105 hover:shadow-elden-ring cursor-pointer overflow-hidden"
-                >
-                  {/* Background atmospheric effects */}
-                  <div className="absolute inset-0 bg-elden-ring-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-orange/3 to-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div key={item._id || index}>
+                  <button type="button" onClick={() => handleOpen(item)} className="w-full h-full">
+                    <div
+                      className="group relative bg-slate-900/70 backdrop-blur-md rounded-3xl p-8 border border-gold/20 hover:border-gold/60 transition-all duration-500 transform hover:scale-105 hover:shadow-elden-ring cursor-pointer overflow-hidden"
+                    >
+                      {/* Background atmospheric effects */}
+                      <div className="absolute inset-0 bg-elden-ring-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-orange/3 to-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                  {/* Corner decorative elements */}
-                  <div className="absolute top-3 left-3 w-2 h-2 border-l-2 border-t-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
-                  <div className="absolute top-3 right-3 w-2 h-2 border-r-2 border-t-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
-                  <div className="absolute bottom-3 left-3 w-2 h-2 border-l-2 border-b-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
-                  <div className="absolute bottom-3 right-3 w-2 h-2 border-r-2 border-b-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
+                      {/* Corner decorative elements */}
+                      <div className="absolute top-3 left-3 w-2 h-2 border-l-2 border-t-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
+                      <div className="absolute top-3 right-3 w-2 h-2 border-r-2 border-t-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
+                      <div className="absolute bottom-3 left-3 w-2 h-2 border-l-2 border-b-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
+                      <div className="absolute bottom-3 right-3 w-2 h-2 border-r-2 border-b-2 border-gold/30 group-hover:border-gold transition-colors duration-300"></div>
 
-                  {/* Content */}
-                  <div className="relative z-10">
-                    <h3 className="font-crimson text-xl font-semibold text-white text-center leading-tight group-hover:text-gold transition-all duration-300 group-hover:text-shadow-glow">
-                      {item.name}
-                    </h3>
-
-                    {/* Decorative elements */}
-                    <div className="mt-6 flex justify-center items-center">
-                      <div className="w-6 h-0.5 bg-gold/20 group-hover:bg-gold transition-colors duration-300"></div>
-                      <div className="mx-3 w-1.5 h-1.5 border border-gold/20 group-hover:border-gold rotate-45 transition-colors duration-300"></div>
-                      <div className="w-6 h-0.5 bg-gold/20 group-hover:bg-gold transition-colors duration-300"></div>
+                      {/* Content */}
+                      <div className="relative z-10">
+                        <div>
+                          {item.name}
+                          {item.image && <img src={item.image} alt={item.name} className="w-full h-40 object-cover rounded-lg mt-2" />}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Hover effect overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-gold/15 via-transparent to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  {/* Floating particles on hover */}
-                  <div className="absolute top-2 left-2 w-1 h-1 bg-gold/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300"></div>
-                  <div className="absolute top-4 right-4 w-0.5 h-0.5 bg-orange/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse delay-200 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-3 left-4 w-0.5 h-0.5 bg-gold/30 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse delay-500 transition-opacity duration-300"></div>
+                  </button>
                 </div>
               ))}
+            </div>
+          )}
+
+          {isModalOpen && selectedItem && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={handleClose}>
+              <div className="bg-slate-900/90 rounded-2xl p-8 max-w-2xl mx-4" onClick={(e) => e.stopPropagation()}>
+                <button type="button" className="text-white text-2xl leading-none float-right" onClick={handleClose} aria-label="Close">&times;</button>
+                <div className="flex flex-col items-center">
+                  <h2 className="font-bold text-2xl mb-4">{selectedItem.name}</h2>
+                  {selectedItem.image && <img src={selectedItem.image} alt={selectedItem.name} className="rounded-lg mb-4" />}
+                  <p className="text-sm text-gray-300">{selectedItem.description}</p>
+                </div>
+              </div>
             </div>
           )}
 

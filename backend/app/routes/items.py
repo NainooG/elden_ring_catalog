@@ -3,8 +3,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from pymongo.collection import Collection
 from app.test_database import get_database
 from bson import ObjectId
+import redis
+import json
 
 router = APIRouter()
+
+rd = redis.Redis(host="localhost", port=6379, db=0)
 
 def convert_nan_to_none(data):
     """Convert NaN values in the data to None."""
@@ -43,7 +47,20 @@ def get_items_by_type(item_type: str, db: Collection = Depends(get_database)):
     
     # print(list(db[item_type].find())) # prints a list of JSON objects
     
-    items = list(db[item_type].find()) 
-    items = convert_objectid(items)  # Convert ObjectId to string
-    items = convert_nan_to_none(items)  # Convert NaN to None
-    return items
+    cached = rd.get(item_type)
+    if cached: 
+        print("cache hit")
+        return json.loads(cached) # returns JSON object as Python object
+    
+    else:
+        print("cache miss")
+        items = list(db[item_type].find())
+        items = convert_objectid(items)  # Convert ObjectId to string
+        items = convert_nan_to_none(items)  # Convert NaN to None
+        rd.set(item_type, json.dumps(items)) # converts Python to JSON object
+        return items
+    
+    # items = list(db[item_type].find()) 
+    # items = convert_objectid(items)  # Convert ObjectId to string
+    # items = convert_nan_to_none(items)  # Convert NaN to None
+    # return items

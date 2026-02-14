@@ -6,13 +6,14 @@ import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import pandas as pd 
+import certifi
 
 load_dotenv()
 
 # 2
 def connect_to_mongoDB():
     CONNECTION_STRING = os.getenv("MONGODB_CONNECTION_STRING")
-    client = MongoClient(CONNECTION_STRING)
+    client = MongoClient(CONNECTION_STRING, tlsCAFile=certifi.where())
     return client["elden_ring"]
 
 def parse_csv(file_path, fill_value=None):
